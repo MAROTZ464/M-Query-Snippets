@@ -1,0 +1,9 @@
+//Pad Start - Add leading characters to a string until it reaches a specified length
+Text.PadStart(Text.From([YourColumnName]), Length, "Character")   (e.g., Text.PadStart(Text.From([YourColumnName]), 5, "0") to pad with zeros
+)
+
+let
+    Source = Excel.CurrentWorkbook(){[Name="Table1"]}[Content],
+    AddedColumn = Table.AddColumn(Source, "PaddedCode", each Text.PadStart(Text.From([Code]), 5, "0"))
+in
+    AddedColumn
