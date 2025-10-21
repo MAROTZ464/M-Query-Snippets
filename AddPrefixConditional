@@ -1,0 +1,10 @@
+//Adds a prefix based on condition
+
+let
+    Source = ... ,  // your data source
+    AddPrefix = Table.AddColumn(Source, "ColumnName", each 
+        if Character.FromNumber(Character.ToNumber(Text.Start([YOUR COLUMN], 1))) >= "A" and Character.FromNumber(Character.ToNumber(Text.Start([YOUR COLUMN], 1))) <= "Z" 
+        then [YOUR COLUMN] 
+        else "PREFIX" & [YOUR COLUMN])
+in
+    AddPrefix
