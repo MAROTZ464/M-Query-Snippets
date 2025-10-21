@@ -1,0 +1,8 @@
+let
+    Source = ... ,  // your data source
+    ReplaceZeros = Table.AddColumn(Source, "UpdatedCode", each 
+        if Text.Start([PaddedCode], 2) = "00" 
+        then Text.ReplaceRange([PaddedCode], 0, 2, "CC") 
+        else [PaddedCode])
+in
+    ReplaceZeros
