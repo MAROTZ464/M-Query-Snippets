@@ -1,0 +1,19 @@
+let
+    Source = Excel.CurrentWorkbook(){[Name="YourTableName"]}[Content],
+
+    // Column A: Add "FG" if value starts with a digit
+    AddFGPrefix = Table.TransformColumns(Source, {
+        {"ColumnA", each if Text.Start(Text.From(_), 1) >= "0" and Text.Start(Text.From(_), 1) <= "9" then "FG" & Text.From(_) else Text.From(_)}
+    }),
+
+    // Column C: Add "C" and pad with zeros to make total length 4
+    PadColumnC = Table.TransformColumns(AddFGPrefix, {
+        {"ColumnC", each "C" & Text.PadStart(Text.From(_), 3, "0")}
+    }),
+
+    // Column L: Add "CC" and pad with zeros to make total length 5
+    PadColumnL = Table.TransformColumns(PadColumnC, {
+        {"ColumnL", each "CC" & Text.PadStart(Text.From(_), 3, "0")}
+    })
+in
+    PadColumnL
